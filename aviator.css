@@ -1,0 +1,406 @@
+.aviator-shell {
+    display: grid;
+    gap: 18px;
+}
+
+.aviator-topbar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.history-strip {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 12px;
+    border-radius: 18px;
+    background: #111827;
+    border: 1px solid #243245;
+}
+
+.history-pill {
+    min-width: 82px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.history-pill.low {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.history-pill.mid {
+    background: linear-gradient(135deg, #f59e0b, #eab308);
+}
+
+.history-pill.high {
+    background: linear-gradient(135deg, #10b981, #14b8a6);
+}
+
+.seed-badge {
+    min-width: 180px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #111827;
+    border: 1px solid #243245;
+}
+
+.seed-badge span,
+.players-head span,
+.stat-grid span {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.aviator-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.9fr) minmax(310px, 0.9fr);
+    gap: 20px;
+}
+
+.aviator-stage-card,
+.bet-card {
+    background: #0f172a;
+    border: 1px solid #223247;
+    border-radius: 22px;
+}
+
+.aviator-stage-card {
+    padding: 18px;
+}
+
+.aviator-stage {
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top right, rgba(239, 68, 68, 0.22), transparent 28%),
+        linear-gradient(180deg, #0b1220 0%, #101b33 100%);
+}
+
+.stage-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+}
+
+.curve-overlay {
+    position: absolute;
+    left: -8%;
+    bottom: -30%;
+    width: 120%;
+    height: 70%;
+    border-top: 3px solid rgba(239, 68, 68, 0.8);
+    border-radius: 50% 50% 0 0;
+    opacity: 0.35;
+    transform: rotate(-6deg);
+}
+
+.plane-sprite {
+    position: absolute;
+    left: 70px;
+    bottom: 66px;
+    font-size: 2.3rem;
+    color: #f97316;
+    text-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
+    will-change: transform;
+}
+
+.crash-burst {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(251,146,60,0.92), rgba(239,68,68,0.55), transparent 72%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.crash-burst.active {
+    animation: aviator-burst 0.9s ease-out forwards;
+}
+
+@keyframes aviator-burst {
+    from { transform: scale(0.2); opacity: 0.25; }
+    45% { transform: scale(1.05); opacity: 1; }
+    to { transform: scale(1.9); opacity: 0; }
+}
+
+.stage-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 14px;
+}
+
+.phase-chip,
+.countdown-pill {
+    justify-self: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+}
+
+.multiplier-main {
+    font-size: clamp(3.4rem, 7vw, 6.2rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.multiplier-sub {
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+
+.players-card {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    background: #0b1325;
+    border: 1px solid #1f2d44;
+}
+
+.players-head,
+.side-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.players-head h2,
+.side-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.players-table {
+    display: grid;
+    gap: 8px;
+}
+
+.players-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #111827;
+    align-items: center;
+}
+
+.players-header {
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.76rem;
+}
+
+.players-row.pending {
+    border: 1px solid #334155;
+}
+
+.players-row.cashed_out {
+    border: 1px solid rgba(16, 185, 129, 0.45);
+}
+
+.players-row.lost {
+    border: 1px solid rgba(239, 68, 68, 0.45);
+}
+
+.aviator-side {
+    display: grid;
+    gap: 18px;
+}
+
+.bet-card {
+    padding: 18px;
+}
+
+.bet-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.tab-btn {
+    border: 1px solid #334155;
+    background: #111827;
+    color: #cbd5e1;
+    border-radius: 14px;
+    padding: 10px 12px;
+}
+
+.tab-btn.active {
+    background: #1d4ed8;
+    color: #fff;
+}
+
+.bet-input-wrap {
+    margin-bottom: 14px;
+}
+
+.bet-input-wrap label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+}
+
+.bet-input-wrap input,
+.bet-stepper input {
+    width: 100%;
+    background: #111827;
+    border: 1px solid #334155;
+    color: #fff;
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+
+.bet-stepper {
+    display: grid;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 8px;
+}
+
+.step-btn {
+    background: #1f2937;
+    border: 1px solid #334155;
+    color: #fff;
+    border-radius: 14px;
+}
+
+.toggle-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #334155;
+    border-radius: 999px;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 4px;
+    top: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.switch input:checked + .slider {
+    background: #10b981;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+.action-btn {
+    width: 100%;
+    border: 0;
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.bet-btn {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #08110a;
+}
+
+.cashout-btn {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: #180d02;
+}
+
+.cashout-btn:disabled {
+    opacity: 0.45;
+}
+
+.bet-note {
+    margin-top: 12px;
+    color: #cbd5e1;
+    text-align: center;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.stat-grid > div {
+    padding: 12px;
+    border-radius: 16px;
+    background: #111827;
+    border: 1px solid #243244;
+}
+
+.stat-grid strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 992px) {
+    .aviator-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .aviator-topbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .players-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .players-header {
+        display: none;
+    }
+}
