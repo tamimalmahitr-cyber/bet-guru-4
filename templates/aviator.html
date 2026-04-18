@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/aviator.css') }}">
+{% endblock %}
+{% block content %}
+<div class="aviator-shell" data-aviator-page>
+    <div class="aviator-topbar">
+        <div class="history-strip" id="history-strip"></div>
+        <div class="seed-badge">
+            <span>Seed Hash</span>
+            <strong id="seed-hash">{{ initial_state.seed_hash[:16] if initial_state.seed_hash else '--' }}</strong>
+        </div>
+    </div>
+
+    <div class="aviator-layout">
+        <section class="aviator-stage-card">
+            <div class="aviator-stage" id="aviator-stage">
+                <div class="stage-grid"></div>
+                <div class="curve-overlay"></div>
+                <div class="plane-sprite" id="plane-sprite">
+                    <span class="plane-icon"><i class="fas fa-plane-up"></i></span>
+                </div>
+                <div class="crash-burst" id="crash-burst"></div>
+                <div class="stage-center">
+                    <div class="phase-chip" id="phase-chip">{{ initial_state.phase }}</div>
+                    <div class="multiplier-main" id="multiplier-main">{{ '%.2f'|format(initial_state.multiplier or 1) }}x</div>
+                    <div class="multiplier-sub" id="multiplier-sub">{{ initial_state.status_text }}</div>
+                    <div class="countdown-pill" id="countdown-pill">Next round in {{ initial_state.countdown or 10 }}s</div>
+                </div>
+            </div>
+
+            <div class="players-card">
+                <div class="players-head">
+                    <h2>Live Bets</h2>
+                    <span id="player-count-label">{{ initial_state.player_count or 0 }} players</span>
+                </div>
+                <div class="players-table">
+                    <div class="players-row players-header">
+                        <span>Player</span>
+                        <span>Bet</span>
+                        <span>Cashout</span>
+                        <span>Win</span>
+                    </div>
+                    <div id="players-body"></div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="aviator-side">
+            <div class="bet-card">
+                <div class="side-header">
+                    <h2>Your Wallet</h2>
+                    <span id="wallet-balance">{{ balance }}</span>
+                </div>
+                <div class="bet-tabs">
+                    <button class="tab-btn active">Bet</button>
+                    <button class="tab-btn">Auto Bet</button>
+                </div>
+                <div class="bet-input-wrap">
+                    <label>Bet Amount</label>
+                    <div class="bet-stepper">
+                        <button type="button" class="step-btn" data-step="-10">-</button>
+                        <input id="bet-amount" type="number" min="10" value="50">
+                        <button type="button" class="step-btn" data-step="10">+</button>
+                    </div>
+                </div>
+                <div class="bet-input-wrap">
+                    <label>Auto Cash Out</label>
+                    <input id="auto-cashout" type="number" min="1.10" max="20.00" step="0.10" placeholder="1.50">
+                </div>
+                <div class="toggle-line">
+                    <span>Auto Bet</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auto-bet-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button id="place-bet-btn" class="action-btn bet-btn">Bet</button>
+                <button id="cashout-btn" class="action-btn cashout-btn" disabled>Cash Out</button>
+                <div class="bet-note" id="bet-note">Place your bet before takeoff.</div>
+            </div>
+
+            <div class="bet-card dual-card">
+                <div class="side-header">
+                    <h2>Current Bet</h2>
+                    <span id="active-status">{{ initial_state.my_bet.status if initial_state.my_bet else 'idle' }}</span>
+                </div>
+                <div class="stat-grid">
+                    <div>
+                        <span>Amount</span>
+                        <strong id="active-amount">{{ initial_state.my_bet.amount if initial_state.my_bet else '--' }}</strong>
+                    </div>
+                    <div>
+                        <span>Auto</span>
+                        <strong id="active-auto">{{ initial_state.my_bet.auto_cashout if initial_state.my_bet and initial_state.my_bet.auto_cashout else '--' }}</strong>
+                    </div>
+                    <div>
+                        <span>Cashout</span>
+                        <strong id="active-multiplier">{{ initial_state.my_bet.cashout_multiplier if initial_state.my_bet and initial_state.my_bet.cashout_multiplier else '--' }}</strong>
+                    </div>
+                    <div>
+                        <span>Payout</span>
+                        <strong id="active-payout">{{ initial_state.my_bet.payout if initial_state.my_bet else '--' }}</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+window.AVIATOR_CONFIG = {
+    initialState: {{ initial_state|tojson|safe }}
+};
+</script>
+<script src="{{ url_for('static', filename='js/aviator.js') }}"></script>
+{% endblock %}
